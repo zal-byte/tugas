@@ -3,18 +3,86 @@ class switch_case {
     public static void main(String args[]){
         Scanner scanme = new Scanner(System.in);
         manage myClass = new manage();
+        aturNilai nilai = new aturNilai();
         try{
-            input(scanme, myClass);
+            input(scanme, myClass, nilai);
         }catch(Exception e){
             e.printStackTrace();
         }
     }   
-    static void input(Scanner scan, manage myClass){
+    static void input(Scanner scan, manage myClass, aturNilai nilai){
         inline("Nama : ");
         myClass.setNama(scan.nextLine());
         inline("Jurusan : ");
         myClass.setJurusan(scan.nextLine());
+
+        new_line("---+ Masukan Nilai Normatif +---");
+        inline("PABP : ");
+        nilai.setPabp(scan.nextDouble());
+        inline("PKN : ");
+        nilai.setPkn(scan.nextDouble());
+        inline("Indonesia : ");
+        nilai.setIndonesia(scan.nextDouble());
+        inline("Inggris : ");
+        nilai.setInggris(scan.nextDouble());
+        inline("Matematika : ");
+        nilai.setMatematika(scan.nextDouble());
+
+        new_line("---+ Masukan nilai produktif +---");
+        inline("PPL : ");
+        nilai.setPpl(scan.nextDouble());
+        inline("PWPB : ");
+        nilai.setPwpb(scan.nextDouble());
+        inline("Database : ");
+        nilai.setDatabase(scan.nextDouble());
+        inline("PBO : ");
+        nilai.setPbo(scan.nextDouble());
+        inline("SimDig : ");
+        nilai.setSimdig(scan.nextDouble());
+        // new_line(nilai.getGrade());
+        switch(nilai.getGrade()){
+            case "A":
+            show("A",myClass, nilai);
+            break;
+            case "B":
+            show("B", myClass, nilai);
+            break;
+            case "C":
+            show("C", myClass, nilai);
+            break;
+            case "D":
+            show("D", myClass, nilai);
+            break;
+            default:
+            break;
+        }
     }   
+    public static void show(String grade, manage myClass, aturNilai nilai){
+        new_line("---+ Result +---");
+        new_line("---+ Information +---");
+        new_line("Nama : "+myClass.getNama());
+        new_line("Jurusan : "+myClass.getJurusan());
+        new_line("---+ Nilai Akhir +---");
+        new_line("Nilai Rata - Rata : "+nilai.calculate());
+        new_line("Status : "+grade);
+        switch(grade){
+            case "A":
+            new_line("Excelent !");
+            break;
+            case "B":
+            new_line("Good job");
+            break;
+            case "C":
+            new_line("Good");
+            break;
+            case "D":
+            new_line("Try Again");
+            break;
+            default:
+            break;
+        }
+        new_line("---+ End of Result +---");
+    }
     public static void  inline(String value){
         System.out.print(value);
     }
@@ -35,6 +103,26 @@ class Nilai{
         final double finals = normatif + produktif;
         int jumlah_mapel = 10;
         return finals / jumlah_mapel;
+    }
+    public String getGrade(){
+        if( this.calculate() >= 99){
+            return "A";
+        }else if(this.calculate() >= 80){
+            if( this.calculate() <= 89){
+                return "B";
+            }
+        }else if(this.calculate() >= 70){
+            if( this.calculate() <= 79){
+                return "C";
+            }
+        }else if( this.calculate() >= 30){
+            if( this.calculate() <= 39){
+                return "D";
+            }
+        }else{
+            return "D";
+        }
+        return "Tidak dapat mengambil grade";
     }
     public void setPpl(double value){
         ppl = value;
